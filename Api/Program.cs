@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API;
 using API.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace API
+namespace Api
 {
     public class Program
     {
@@ -21,7 +22,8 @@ namespace API
             var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-            try{
+            try
+            {
                 context.Database.Migrate();
                 DbInitializer.Initializer(context);
             }
