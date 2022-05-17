@@ -12,23 +12,24 @@ import 'react-toastify/dist/ReactToastify.css'
 import ServerError from "../error/ServerError";
 import NotFound from "../error/NotFound";
 import BasketPage from "../../features/Basket/BasketPage";
-import { useStoreContext } from "../context/StoreContext";
 import { getCookie } from "../Util/Util";
 import agent from "../Api/agent";
 import LoadingComponent from "./LoadingComponent";
 import CheckoutPage from "../../features/Checkout/CheckoutPage";
+import { useDispatch } from "react-redux";
+import { setBasket } from "../../features/Basket/basketSlice";
 
 
 function App() {
 
-  const {setBasket} = useStoreContext();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(()=>{
     const buyerId = getCookie('buyerId');
     if(buyerId){
       agent.Basket.get()
-        .then(basket => setBasket(basket))
+        .then(basket => dispatch(setBasket(basket)))
         .catch(error => console.log(error))
         .finally(()=> setLoading(false));
 
